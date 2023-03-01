@@ -19,8 +19,8 @@ class RepositorioProd {
     }
 
     async obtenerProductosXid(idBuscado) {
-        const Dto = await this.#dao.obtenerXid(idBuscado)
-        return new ModeloDtoProds(Dto)
+        const elemento = await this.#dao.obtenerXid(idBuscado)
+        return new ModeloDtoProds(MensajesDTO(elemento))
     }
 
     async guardarProductosBD(nuevoElemento) {
@@ -29,7 +29,7 @@ class RepositorioProd {
 
     async eliminarProductosXid(idBuscado) {
         const eliminado = await this.#dao.eliminarXid(idBuscado)
-        return new ModeloDtoProds(eliminado)
+        return new ModeloDtoProds(MensajesDTO(eliminado))
     }
 
     async eliminarTodosProductos() {
@@ -37,6 +37,6 @@ class RepositorioProd {
     }
 }
 
-export default { RepositorioProd }
+export { RepositorioProd };
 
 

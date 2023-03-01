@@ -15,12 +15,12 @@ class RepositorioMsj {
 
     async obtenerTodosMensajes() {
         const elementos = await this.#dao.obtenerTodos()
-        return elementos.map(item => new ModeloDtoMsjs(item))
+        return MensajesDTO(elementos.map(item => new ModeloDtoMsjs(item)))
     }
 
     async obtenerMensajesXid(idBuscado) {
         const Dto = await this.#dao.obtenerXid(idBuscado)
-        return new ModeloDtoMsjs(Dto)
+        return new ModeloDtoMsjs(MensajesDTO(Dto))
     }
 
     async guardarMensajesBD(nuevoElemento) {
@@ -29,7 +29,7 @@ class RepositorioMsj {
 
     async eliminarMensajesXid(idBuscado) {
         const eliminado = await this.#dao.eliminarXid(idBuscado)
-        return new ModeloDtoMsjs(eliminado)
+        return new ModeloDtoMsjs(MensajesDTO(eliminado))
     }
 
     async eliminarTodosMensajes() {
@@ -37,4 +37,4 @@ class RepositorioMsj {
     }
 }
 
-export default { RepositorioMsj }
+export { RepositorioMsj };

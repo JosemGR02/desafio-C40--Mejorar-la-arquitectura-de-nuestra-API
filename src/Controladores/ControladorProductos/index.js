@@ -48,6 +48,25 @@ const crearProducto = async (solicitud, respuesta) => {
     }
 };
 
+const actualizarProducto = async (solicitud, respuesta) => {
+    try {
+        const { id } = solicitud.params;
+
+        const { titulo, descripcion, codigo, stock,
+            precio, imagen, timestamp } = solicitud.body;
+
+        const productoValidado = await JOI_VALIDADOR.productoJoi.validateAsync({
+            titulo, descripcion, codigo, imagen, precio, stock, timestamp
+        });
+
+        const productoActualizado = RepositorioProd.actualizarProductosXid({ productoValidado }, id)
+
+        respuesta.send(`${productoActualizado}, Producto actualizado con exito`)
+    } catch (error) {
+        respuesta.send(`${error}, Error al actualizar el producto solicitado`)
+    }
+}
+
 const eliminarXid = async (solicitud, respuesta) => {
     try {
         const { id } = solicitud.params;
@@ -74,6 +93,7 @@ export const controladorProductos = {
     obtenerTodos,
     obtenerXid,
     crearProducto,
+    actualizarProducto,
     eliminarXid,
     eliminarTodos
 };

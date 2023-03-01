@@ -2,7 +2,7 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Mensajes |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-class MensajesDTO {
+export class MensajesDTO {
     constructor({ id, nombre, apellido, edad, alias, avatar }) {
         this.id = id
         this.nombre = nombre
@@ -19,6 +19,3 @@ export function usandoDTO(elemento) {
     else
         return new MensajesDTO(elemento)
 }
-
-
-export default { MensajesDTO };

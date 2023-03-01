@@ -1,6 +1,5 @@
 
 import fs from 'fs';
-import { ProductosDTO } from '../Dto/index.js';
 import { logger } from '../Configuracion/logger.js';
 
 
@@ -51,19 +50,19 @@ class ContenedorFileSystem {
 
     async obtenerTodos() {
         await this.#leerArchivo()
-        return ProductosDTO(this.elementos)
+        return usandoDTO(this.elementos)
     }
 
     async obtenerXid(id) {
         await this.#leerArchivo()
-        return ProductosDTO(this.elementos[this.#obtenerIndice(id)])
+        return usandoDTO(this.elementos[this.#obtenerIndice(id)])
     }
 
     async guardar(elemento) {
         await this.#leerArchivo()
         this.elementos.push(elemento)
         await this.#escribirArchivo()
-        return ProductosDTO(elemento)
+        return usandoDTO(elemento)
     }
 
     async actualizar(id, nuevosdatos) {
@@ -72,14 +71,14 @@ class ContenedorFileSystem {
         const actualizado = { ...this.elementos[index], ...nuevosdatos }
         this.elementos.splice(index, 1, actualizado)
         await this.#escribirArchivo()
-        return asDto(actualizado)
+        return usandoDTO(actualizado)
     }
 
     async eliminarXid(id) {
         await this.#leerArchivo()
         const [eliminado] = this.elementos.splice(this.#obtenerIndice(id), 1)
         await this.#escribirArchivo()
-        return ProductosDTO(eliminado)
+        return usandoDTO(eliminado)
     }
 
     async eliminarTodos() {
@@ -89,4 +88,4 @@ class ContenedorFileSystem {
 }
 
 
-export default { ContenedorFileSystem };
+export { ContenedorFileSystem };

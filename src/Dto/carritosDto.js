@@ -2,8 +2,8 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Carritos |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-class CarritosDTO {
-    constructor({ timestamp, usuario, productos }) {   //timestamp
+export class CarritosDTO {
+    constructor({ timestamp, usuario, productos }) {
         this.timestamp = timestamp
         this.usuario = usuario
         this.productos = productos
@@ -16,6 +16,3 @@ export function usandoDTO(elemento) {
     else
         return new CarritosDTO(elemento)
 }
-
-
-export default { CarritosDTO };

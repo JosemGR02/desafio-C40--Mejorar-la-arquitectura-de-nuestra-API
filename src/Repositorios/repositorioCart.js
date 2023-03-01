@@ -15,12 +15,12 @@ class RepositorioCart {
 
     async obtenerTodosCarritos() {
         const elementos = await this.#dao.obtenerTodos()
-        return elementos.map(item => new ModeloDtoCarts(item))
+        return CarritosDTO(elementos.map(item => new ModeloDtoCarts(item)))
     }
 
     async obtenerCarritoXid(idBuscado) {
-        const Dto = await this.#dao.obtenerXid(idBuscado)
-        return new ModeloDtoCarts(Dto)
+        const elemento = await this.#dao.obtenerXid(idBuscado)
+        return new ModeloDtoCarts(CarritosDTO(elemento))
     }
 
     async guardarCarritoBD(nuevoElemento) {
@@ -29,7 +29,7 @@ class RepositorioCart {
 
     async eliminarCarritoXid(idBuscado) {
         const eliminado = await this.#dao.eliminarXid(idBuscado)
-        return new ModeloDtoCarts(eliminado)
+        return new ModeloDtoCarts(CarritosDTO(eliminado))
     }
 
     async eliminarTodosCarritos() {
@@ -37,4 +37,4 @@ class RepositorioCart {
     }
 }
 
-export default { RepositorioCart }
+export { RepositorioCart };

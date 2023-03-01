@@ -37,5 +37,5 @@ class RepositorioUser {
     }
 }
 
-export default { RepositorioUser }
+export { RepositorioUser };
 

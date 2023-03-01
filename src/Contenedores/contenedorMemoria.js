@@ -1,5 +1,4 @@
 
-import { ProductosDTO } from '../Dto/index.js';
 import { logger } from '../Configuracion/logger.js';
 
 class ContenedorMemoria {
@@ -21,28 +20,28 @@ class ContenedorMemoria {
     }
 
     obtenerTodos() {
-        return asDto(this.elementos)
+        return this.elementos
     }
 
     obtenerXid(id) {
-        return ProductosDTO(this.elementos[this.#obtenerIndice(id)])
+        return (this.elementos[this.#obtenerIndice(id)])
     }
 
     guardar(elemento) {
         this.elementos.push(elemento)
-        return ProductosDTO(elemento)
+        return elemento
     }
 
     actualizar(id, nuevosdatos) {
         const index = this.#obtenerIndice(id)
         const actualizado = { ...this.elementos[index], ...nuevosdatos }
         this.elementos.splice(index, 1, actualizado)
-        return ProductosDTO(actualizado)
+        return actualizado
     }
 
     eliminarXid(id) {
         const [eliminado] = this.elementos.splice(this.#obtenerIndice(id), 1)
-        return ProductosDTO(eliminado)
+        return eliminado
     }
 
     eliminarTodos() {
@@ -50,4 +49,4 @@ class ContenedorMemoria {
     }
 }
 
-export default { ContenedorMemoria };
+export { ContenedorMemoria };
