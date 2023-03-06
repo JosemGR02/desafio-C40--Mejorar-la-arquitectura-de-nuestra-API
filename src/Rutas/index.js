@@ -11,4 +11,6 @@ export { RutaProducto } from './productos/prod.js';
 
 export { RutaCarrito } from './carrito/index.js';
 
+export { RutaMensaje } from './mensaje/index.js';
+
 

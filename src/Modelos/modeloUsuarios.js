@@ -73,4 +73,4 @@ class ModeloDtoUsers {
     }
 }
 
-export default { ModeloDtoUsers }; 
+export { ModeloDtoUsers }; 

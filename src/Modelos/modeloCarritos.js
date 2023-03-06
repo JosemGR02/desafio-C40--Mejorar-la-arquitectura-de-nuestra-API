@@ -34,6 +34,6 @@ class ModeloDtoCarts {
     }
 }
 
-export default { ModeloDtoCarts };
+export { ModeloDtoCarts };
 
 

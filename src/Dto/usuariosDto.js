@@ -1,8 +1,7 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Usuarios |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-
-export class UsuariosDTO {
+export class Usuarios {
     constructor({ nombre, edad, usuario, avatar, contrasena, telefono, direccion }) {
         this.nombre = nombre
         this.edad = edad
@@ -14,10 +13,10 @@ export class UsuariosDTO {
     }
 }
 
-export function usandoDTO(elemento) {
+export function UsuariosDTO(elemento) {
     if (Array.isArray(elemento))
-        return elemento.map(item => new UsuariosDTO(item))
+        return elemento.map(item => new Usuarios(item))
     else
-        return new UsuariosDTO(elemento)
+        return new Usuarios(elemento)
 }
 

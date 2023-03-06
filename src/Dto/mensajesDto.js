@@ -1,8 +1,7 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Mensajes |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-
-export class MensajesDTO {
+export class Mensajes {
     constructor({ id, nombre, apellido, edad, alias, avatar }) {
         this.id = id
         this.nombre = nombre
@@ -13,9 +12,10 @@ export class MensajesDTO {
     }
 }
 
-export function usandoDTO(elemento) {
+export function MensajesDTO(elemento) {
     if (Array.isArray(elemento))
-        return elemento.map(item => new MensajesDTO(item))
+        return elemento.map(item => new Mensajes(item))
     else
-        return new MensajesDTO(elemento)
+        return new Mensajes(elemento)
 }
+

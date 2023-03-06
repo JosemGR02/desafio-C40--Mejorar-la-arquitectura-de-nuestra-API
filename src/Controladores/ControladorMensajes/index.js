@@ -3,7 +3,7 @@ import { RepositorioMsj } from "../../Repositorios/index.js";
 import { FECHA_UTILS, ERRORES_UTILS, LOGGER_UTILS } from "../../Utilidades/index.js";
 
 
-ObtenerMensajes = async (solicitud, respuesta) => {
+const ObtenerMensajes = async (solicitud, respuesta) => {
     try {
         const mensajes = await RepositorioMsj.obtenerTodosMensajes();
 
@@ -18,7 +18,7 @@ ObtenerMensajes = async (solicitud, respuesta) => {
     }
 };
 
-CrearMensaje = async (solicitud, respuesta) => {
+const CrearMensaje = async (solicitud, respuesta) => {
     try {
         const { autor, id, nombre, apellido, edad, alias, avatar, texto } = solicitud.body;
 

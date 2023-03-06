@@ -8,13 +8,13 @@ import { logger } from '../../Configuracion/logger.js';
 
 const obtenerTodos = async (solicitud, respuesta) => {
     try {
-        const producto = await RepositorioProd.obtenerTodosProductos();
+        const productos = await RepositorioProd.obtenerTodos();
 
-        if (!producto) return logger.error({ error: ERRORES_UTILS.MESSAGES.ERROR_PRODUCTO });
+        if (!productos) return logger.error({ error: ERRORES_UTILS.MESSAGES.ERROR_PRODUCTO });
 
-        respuesta.send(producto);
+        respuesta.send(productos);
     } catch (error) {
-        respuesta.send({ error, error: "Error al obtener los productos solicitados" })
+        respuesta.send(`${error}, Error al obtener los productos solicitados`);
     }
 };
 
@@ -22,11 +22,11 @@ const obtenerXid = async (solicitud, respuesta) => {
     try {
         const { id } = solicitud.params;
 
-        const producto = await RepositorioProd.obtenerProductosXid(id);
+        const producto = await RepositorioProd.obtenerXid(id);
 
         respuesta.send(producto);
     } catch (error) {
-        respuesta.send({ error, error: "Error al obtener el producto solicitados" })
+        respuesta.send(`${error}, Error al obtener el producto solicitados`);
     }
 };
 
@@ -34,58 +34,62 @@ const crearProducto = async (solicitud, respuesta) => {
     try {
         const { titulo, descripcion, codigo, imagen, precio, stock } = solicitud.body;
 
-        const nuevoProducto = await JOI_VALIDADOR.producto.validateAsync({
+        logger.info(solicitud.body)
+        const nuevoProducto = await JOI_VALIDADOR.productoJoi.validateAsync({
             titulo, descripcion, codigo, imagen, precio, stock,
             timestamp: FECHA_UTILS.getTimestamp(),
         });
+        logger.info({ nuevoProducto })
+        const productoCreado = await RepositorioProd.guardar(nuevoProducto);
 
-        const productoCreado = await RepositorioProd.guardarProductosBD(nuevoProducto);
-
-        respuesta.send(productoCreado);
+        respuesta.send({ productoCreado });
     } catch (error) {
         await LOGGER_UTILS.addLog(error);
-        respuesta.send({ error, error: "Error al crear el producto solicitado" })
+        respuesta.send(`${error}, Error al crear el producto solicitado`);
     }
 };
 
-const actualizarProducto = async (solicitud, respuesta) => {
+const actualizar = async (solicitud, respuesta) => {
     try {
         const { id } = solicitud.params;
 
-        const { titulo, descripcion, codigo, stock,
-            precio, imagen, timestamp } = solicitud.body;
+        const { titulo, descripcion, stock, codigo, precio, imagen } = solicitud.body
 
         const productoValidado = await JOI_VALIDADOR.productoJoi.validateAsync({
-            titulo, descripcion, codigo, imagen, precio, stock, timestamp
+            titulo, descripcion, codigo, imagen, precio, stock,
         });
+        logger.info({ productoValidado })
 
-        const productoActualizado = RepositorioProd.actualizarProductosXid({ productoValidado }, id)
+        const productoActualizado = await RepositorioProd.actualizar(id, productoValidado)
 
-        respuesta.send(`${productoActualizado}, Producto actualizado con exito`)
+        logger.info({ productoActualizado })
+
+        respuesta.send({ success: true, mensaje: "Se actualizo el producto correctamente", producto: productoActualizado })
+
     } catch (error) {
-        respuesta.send(`${error}, Error al actualizar el producto solicitado`)
+        respuesta.send(`${error}, Error al actualizar un producto`);
     }
-}
+};
 
 const eliminarXid = async (solicitud, respuesta) => {
     try {
         const { id } = solicitud.params;
 
-        await RepositorioProd.eliminarProductosXid(id);
+        const productoEliminado = await RepositorioProd.eliminarXid(id);
 
-        respuesta.send({ success: true });
+        respuesta.send({ success: true, eliminado: productoEliminado });
     } catch (error) {
-        respuesta.send({ error, error: "Error al eliminar el producto solicitado" })
+        respuesta.send(`${error}, Error al eliminar el producto solicitado`);
     }
 };
 
 const eliminarTodos = async (solicitud, respuesta) => {
     try {
-        await RepositorioProd.eliminarTodosProductos();
+        await RepositorioProd.eliminarTodos();
 
         respuesta.send({ success: true });
     } catch (error) {
-        respuesta.send({ error, error: "Error al eliminar los productos solicitados" })
+        respuesta.send(`${error}, Error al eliminar todos los productos`);
     }
 };
 
@@ -93,8 +97,9 @@ export const controladorProductos = {
     obtenerTodos,
     obtenerXid,
     crearProducto,
-    actualizarProducto,
+    actualizar,
     eliminarXid,
     eliminarTodos
 };
+
 

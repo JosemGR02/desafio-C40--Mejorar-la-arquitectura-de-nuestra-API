@@ -1,40 +1,46 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Repositorio - Mensajes |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-import { DaoFactory } from '../Dao/daoFactory.js';
+import { DaoFactoryMsjs } from '../Dao/daoFactories/index.js';
 import { MensajesDTO } from '../Dto/index.js';
 import { ModeloDtoMsjs } from '../Modelos/modeloMensajes.js';
 
 
 class RepositorioMsj {
-    #dao
+    #daoMsjs
 
     constructor() {
-        this.#dao = DaoFactory.obtenerDAO()
+        this.#daoMsjs = DaoFactoryMsjs.obtenerDao()
     }
 
     async obtenerTodosMensajes() {
-        const elementos = await this.#dao.obtenerTodos()
-        return MensajesDTO(elementos.map(item => new ModeloDtoMsjs(item)))
+        const elementos = await this.#daoMsjs.obtenerTodos()
+        return MensajesDTO(elementos.map(item => new ModeloDtoMsjs(MensajesDTO(item))))
     }
 
     async obtenerMensajesXid(idBuscado) {
-        const Dto = await this.#dao.obtenerXid(idBuscado)
-        return new ModeloDtoMsjs(MensajesDTO(Dto))
+        const mensaje = await this.#daoMsjs.obtenerXid(idBuscado)
+        return new ModeloDtoMsjs(MensajesDTO(mensaje))
     }
 
     async guardarMensajesBD(nuevoElemento) {
-        await this.#dao.guardar(MensajesDTO(nuevoElemento))
+        await this.#daoMsjs.guardar(MensajesDTO(nuevoElemento))
+    }
+
+    async actualizarMensajes(idBuscado, datos) {
+        const actualizado = await this.#daoMsjs.actualizar((idBuscado, datos))
+        return new ModeloDtoMsjs(MensajesDTO(actualizado))
     }
 
     async eliminarMensajesXid(idBuscado) {
-        const eliminado = await this.#dao.eliminarXid(idBuscado)
-        return new ModeloDtoMsjs(MensajesDTO(eliminado))
+        const eliminado = await this.#daoMsjs.eliminarXid(idBuscado)
+        return eliminado
     }
 
     async eliminarTodosMensajes() {
-        await this.#dao.eliminarTodos()
+        await this.#daoMsjs.eliminarTodos()
     }
 }
 
 export { RepositorioMsj };
+

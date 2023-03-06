@@ -20,7 +20,7 @@ const config = {
             MENSAJES_ARCHIVONOMBRE,
             USUARIOS_ARCHIVONOMBRE,
         },
-        mongo: {
+        mongodb: {
             url: process.env.BASEDATOS_MONGO_URL,
             dbName: process.env.BASEDATOS_MONGO_NOMBRE
         }

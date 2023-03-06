@@ -62,6 +62,6 @@ class ModeloDtoMsjs {
     }
 }
 
-export default { ModeloDtoMsjs };
+export { ModeloDtoMsjs };
 
 

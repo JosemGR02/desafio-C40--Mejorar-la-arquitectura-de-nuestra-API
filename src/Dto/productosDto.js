@@ -1,9 +1,9 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Productos |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-
-export class ProductosDTO {
-    constructor({ titulo, descripcion, codigo, imagen, precio, stock, timestamp }) {
+export class Productos {
+    constructor({ id, titulo, descripcion, codigo, imagen, precio, stock, timestamp }) {
+        this.id = id
         this.titulo = titulo
         this.descripcion = descripcion
         this.codigo = codigo
@@ -14,9 +14,10 @@ export class ProductosDTO {
     }
 }
 
-export function usandoDTO(elemento) {
+export function ProductosDTO(elemento) {
     if (Array.isArray(elemento))
-        return elemento.map(item => new ProdutosDTO(item))
+        return elemento.map(item => new Productos(item))
     else
-        return new ProductosDTO(elemento)
+        return new Productos(elemento)
 }
+

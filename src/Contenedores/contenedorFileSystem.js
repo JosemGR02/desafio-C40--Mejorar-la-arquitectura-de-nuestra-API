@@ -32,6 +32,10 @@ class ContenedorFileSystem {
         if (!this.#listo) throw new Error('INTERNAL_ERROR: Dao no esta conectado!')
     }
 
+    #obtenerIndice(id) {
+        return this.elementos.findIndex(elemento => elemento.id === id)
+    }
+
     async #leerArchivo() {
         this.#chequearListo()
         const texto = await fs.promises.readFile(this.ruta, 'utf-8')
@@ -42,10 +46,6 @@ class ContenedorFileSystem {
         this.#chequearListo()
         const texto = JSON.stringify(this.elementos, null, 2)
         await fs.promises.writeFile(this.ruta, texto)
-    }
-
-    #obtenerIndice(id) {
-        return this.elementos.findIndex(elemento => elemento.id === id)
     }
 
     async obtenerTodos() {

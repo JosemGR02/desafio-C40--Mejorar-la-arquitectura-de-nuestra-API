@@ -2,22 +2,30 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Modelos - Productos |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 class ModeloDtoProds {
+    #id
     #titulo
     #descripcion
     #codigo
     #imagen
     #precio
     #stock
-    #timestamp
 
-    constructor({ titulo, descripcion, codigo, imagen, precio, stock, timestamp }) {
+    constructor({ id, titulo, descripcion, codigo, imagen, precio, stock }) {
+        this.id = id
         this.titulo = titulo
         this.descripcion = descripcion
         this.codigo = codigo
         this.imagen = imagen
         this.precio = precio
         this.stock = stock
-        this.timestamp = timestamp
+    }
+
+
+    get id() { return this.#id }
+
+    set id(id) {
+        if (!id) console.log('falta id')
+        this.#id = id
     }
 
     get titulo() { return this.#titulo }
@@ -64,15 +72,8 @@ class ModeloDtoProds {
         if (isNaN(stock)) throw new Error('"stock" es un campo de caracteres exclusivamente numéricos')
         this.#stock = stock
     }
-
-    get timestamp() { return this.#timestamp }
-
-    set timestamp(timestamp) {
-        if (!timestamp) throw new Error('"timestamp" es un campo requerido')
-        this.#timestamp = timestamp
-    }
 }
 
-export default { ModeloDtoProds };
+export { ModeloDtoProds };
 
 
